@@ -179,6 +179,34 @@ CREATE TABLE IF NOT EXISTS configuracion_empresa (
     active BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE IF NOT EXISTS rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol_id INT NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (rol_id) REFERENCES rol(id)
+);
+
+-- Insertar los roles solicitados
+INSERT INTO rol (nombre, descripcion) VALUES
+('ADMIN', 'Administrador con todos los privilegios.'),
+('GERENCIA', 'Rol asignado a la gerencia con permisos avanzados.'),
+('BODEGA', 'Encargado de gestionar el inventario y las operaciones de la bodega.'),
+('VENTAS', 'Encargado de gestionar las ventas y relaciones con los clientes.');
+
+
 -- Estados de Pedido
 INSERT INTO estado_pedido (nombre) VALUES ('Pendiente'), ('Aceptado'), ('Completado'), ('Cancelado');
 
