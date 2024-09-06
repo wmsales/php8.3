@@ -1,0 +1,53 @@
+# Ignore Composer's vendor directory
+/vendor/
+
+# Ignore Composer lock file
+/composer.lock
+
+# Ignore environment variables
+/.env
+
+# Ignore log files
+/log/*
+!log/.gitkeep # Keeps the directory but ignores its contents
+
+# Ignore temporary and cache files
+/tmp/
+*.temp
+*.cache
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+/.vscode/
+/.idea/
+*.iml
+
+# Ignore system file configurations
+*.bak
+*.swp
+
+# Ignore Robo task cache
+/.robo/
+
+# Ignore Node.js dependencies and build files (if you use Node for assets)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore build artifacts (for assets)
+dist/
+build/
+
+# Ignore compiled files
+/public/js/*.map
+/public/css/*.map
+/public/js/*.min.*
+/public/css/*.min.*
+
+# Ignore backups or old config
+*.bak
+*.old
