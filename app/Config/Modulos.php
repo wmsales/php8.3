@@ -4,6 +4,22 @@ namespace App\Config;
 
 return [
     [
+        'nombre' => 'Inicio',
+        'descripcion' => 'Página principal del ERP',
+        'icono' => 'fas fa-home',
+        'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA'],
+        'hijos' => [
+            [
+                'nombre' => 'Home',
+                'descripcion' => 'Vista de inicio',
+                'ruta' => '/home',
+                'vista' => 'home/home.php',
+                'icono' => 'fas fa-house-user',
+                'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA']
+            ]
+        ]
+    ],
+    [
         'nombre' => 'Ventas',
         'descripcion' => 'Módulos relacionados con las ventas',
         'icono' => 'fas fa-shopping-bag',

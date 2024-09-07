@@ -16,25 +16,35 @@
 
                 foreach ($modulos as $moduloPadre) {
                     if (in_array($rolUsuario, $moduloPadre['roles'])) {
-                        echo '<li class="nav-item dropdown">';
-                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $moduloPadre['nombre'] . '</a>';
-                        
-                        // Módulos hijos dentro del dropdown
-                        if (!empty($moduloPadre['hijos'])) {
-                            echo '<ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
-                            foreach ($moduloPadre['hijos'] as $moduloHijo) {
-                                if (in_array($rolUsuario, $moduloHijo['roles'])) {
-                                    echo '<li><a class="dropdown-item" href="' . $moduloHijo['ruta'] . '">';
-                                    echo '<div class="dropdown-item-content">';
-                                    echo '<i class="' . $moduloHijo['icono'] . ' me-2"></i>';
-                                    echo '<span>' . $moduloHijo['nombre'] . '</span>';
-                                    echo '</div>';
-                                    echo '</a></li>';
+                        // Si el módulo es "Inicio", no usar dropdown, redirigir directamente a /home
+                        if ($moduloPadre['nombre'] === 'Inicio') {
+                            echo '<li class="nav-item">';
+                            echo '<a class="nav-link" href="/home">';
+                            echo '<i class="' . $moduloPadre['icono'] . ' me-2"></i>' . $moduloPadre['nombre'];
+                            echo '</a>';
+                            echo '</li>';
+                        } else {
+                            // Para los demás módulos, usar dropdown
+                            echo '<li class="nav-item dropdown">';
+                            echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $moduloPadre['nombre'] . '</a>';
+                            
+                            // Módulos hijos dentro del dropdown
+                            if (!empty($moduloPadre['hijos'])) {
+                                echo '<ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
+                                foreach ($moduloPadre['hijos'] as $moduloHijo) {
+                                    if (in_array($rolUsuario, $moduloHijo['roles'])) {
+                                        echo '<li><a class="dropdown-item" href="' . $moduloHijo['ruta'] . '">';
+                                        echo '<div class="dropdown-item-content">';
+                                        echo '<i class="' . $moduloHijo['icono'] . ' me-2"></i>';
+                                        echo '<span>' . $moduloHijo['nombre'] . '</span>';
+                                        echo '</div>';
+                                        echo '</a></li>';
+                                    }
                                 }
+                                echo '</ul>';
                             }
-                            echo '</ul>';
+                            echo '</li>';
                         }
-                        echo '</li>';
                     }
                 }
                 ?>
