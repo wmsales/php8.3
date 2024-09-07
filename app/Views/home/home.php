@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row admin-dashboard">
         <div class="col-md-4 mt-3">
             <?php include __DIR__ . '/../components/breadcrumb.php'; ?>
         </div>
@@ -19,8 +19,7 @@
 
         <!-- Sección de tarjetas con gráficos -->
         <div class="row">
-            <!-- Tarjeta de Ventas Totales -->
-            <div class="col-lg-3 col-md-6 mb-4">
+            <div class="col-lg-6 col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Ventas Totales</h5>
@@ -29,7 +28,16 @@
                 </div>
             </div>
 
-            <!-- Tarjeta de Pedidos Pendientes -->
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Clientes Activos</h5>
+                        <canvas id="clientesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -39,17 +47,6 @@
                 </div>
             </div>
 
-            <!-- Tarjeta de Clientes Activos -->
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Clientes Activos</h5>
-                        <canvas id="clientesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta de Pedidos Facturados -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
