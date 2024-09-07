@@ -204,8 +204,8 @@ INSERT INTO rol (nombre, descripcion) VALUES
 ('ADMIN', 'Administrador con todos los privilegios.'),
 ('GERENCIA', 'Rol asignado a la gerencia con permisos avanzados.'),
 ('BODEGA', 'Encargado de gestionar el inventario y las operaciones de la bodega.'),
-('VENTAS', 'Encargado de gestionar las ventas y relaciones con los clientes.');
-
+('VENTAS', 'Encargado de gestionar las ventas y relaciones con los clientes.'),
+('INVITADO', 'Rol con acceso limitado para visualizar información.');
 
 -- Estados de Pedido
 INSERT INTO estado_pedido (nombre) VALUES ('Pendiente'), ('Aceptado'), ('Completado'), ('Cancelado');
