@@ -10,15 +10,19 @@ foreach ($routes as $route) {
 }
 
 $match = $router->match();
+
 if ($match) {
-    if (is_callable($match['target'])) {
-        call_user_func_array($match['target'], $match['params']);
-    } else {
-        list($controller, $method) = $match['target'];
-        $controller = new $controller();
-        call_user_func_array([$controller, $method], $match['params']);
+    try {
+        if (is_callable($match['target'])) {
+            call_user_func_array($match['target'], $match['params']);
+        } else {
+            list($controller, $method) = $match['target'];
+            $controller = new $controller();
+            call_user_func_array([$controller, $method], $match['params']);
+        }
+    } catch (Exception $e) {
+        (new \App\Controllers\ErrorController())->internalServerError();
     }
 } else {
-    header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
-    echo '404 Not Found';
+    (new \App\Controllers\ErrorController())->notFound();
 }

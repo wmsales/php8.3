@@ -41,6 +41,15 @@ class BaseController
     protected function render($view, $data = [])
     {
         extract($data);
-        include __DIR__ . "/../../Views/{$view}.php";
+
+        $viewPath = realpath(__DIR__ . "/../Views/{$view}.php");
+
+        if (file_exists($viewPath)) {
+            include $viewPath;
+        } else {
+            echo "Error: La vista '{$view}' no se encontró en {$viewPath}.";
+        }
     }
+
+
 }

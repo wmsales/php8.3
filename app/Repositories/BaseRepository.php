@@ -20,6 +20,11 @@ class BaseRepository
         return $this->db->select($this->table, "*");
     }
 
+    public function findBy($field, $value)
+    {
+        return $this->db->get($this->table, '*', [$field => $value]);
+    }
+
     public function findById($id)
     {
         return $this->db->get($this->table, "*", ["id" => $id]);
