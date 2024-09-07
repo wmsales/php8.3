@@ -1,11 +1,24 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require '../vendor/autoload.php';
 
-use App\Controllers\ClienteController;
+$router = new AltoRouter();
+$routes = include __DIR__ . '/../app/Config/Routes.php';
 
-$clienteController = new ClienteController();
+foreach ($routes as $route) {
+    $router->map($route['method'], $route['uri'], $route['target']);
+}
 
-$cliente = $clienteController->index();
-
-print_r($cliente);
+$match = $router->match();
+if ($match) {
+    if (is_callable($match['target'])) {
+        call_user_func_array($match['target'], $match['params']);
+    } else {
+        list($controller, $method) = $match['target'];
+        $controller = new $controller();
+        call_user_func_array([$controller, $method], $match['params']);
+    }
+} else {
+    header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+    echo '404 Not Found';
+}
