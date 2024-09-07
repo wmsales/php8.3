@@ -20,9 +20,9 @@ return [
         ]
     ],
     [
-        'nombre' => 'Ventas',
-        'descripcion' => 'Módulos relacionados con las ventas',
-        'icono' => 'fas fa-shopping-bag',
+        'nombre' => 'Clientes',
+        'descripcion' => 'Modulos relacionados con los clientes',
+        'icono' => 'fas fa-home',
         'roles' => ['ADMIN', 'GERENCIA', 'VENTAS'],
         'hijos' => [
             [
@@ -33,6 +33,14 @@ return [
                 'icono' => 'fa-solid fa-users',
                 'roles' => ['ADMIN', 'GERENCIA', 'VENTAS']
             ],
+    ]
+    ],
+    [
+        'nombre' => 'Ventas',
+        'descripcion' => 'Módulos relacionados con las ventas',
+        'icono' => 'fas fa-shopping-bag',
+        'roles' => ['ADMIN', 'GERENCIA', 'VENTAS'],
+        'hijos' => [
             [
                 'nombre' => 'Pedidos',
                 'descripcion' => 'Gestión de pedidos',
