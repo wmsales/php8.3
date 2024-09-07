@@ -19,7 +19,6 @@ class ConfiguracionEmpresa {
     public $tasa_interes_credito;
     public $moneda_oficial;
     public $horario_atencion;
-
     public $fecha_creacion;
     public $fecha_modificacion;
     public $active;

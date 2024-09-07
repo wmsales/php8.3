@@ -15,11 +15,9 @@ class Database
     public function __construct()
     {
         try {
-            // Cargar las variables de entorno del archivo .env
             $dotenv = Dotenv::createImmutable(__DIR__ . "/../../");
             $dotenv->load();
 
-            // Configuración de la base de datos utilizando Medoo
             $this->connection = new Medoo([
                 'type' => $_ENV['DB_DRIVER'],
                 'host' => $_ENV['DB_HOST'],
@@ -31,15 +29,12 @@ class Database
                 'timeout' => 15,
             ]);
         } catch (PDOException $e) {
-            // Si ocurre un error relacionado con la base de datos, lanzar excepción
             throw new Exception("Error al conectar con la base de datos: " . $e->getMessage());
         } catch (Exception $e) {
-            // Si ocurre algún otro tipo de error
-            throw new Exception("Error al configurar la base de datos: " . $e->getMessage());
+            throw new Exception("Error configuracion base de datos: " . $e->getMessage());
         }
     }
 
-    // Método para obtener la conexión
     public function getConnection()
     {
         return $this->connection;

@@ -2,11 +2,12 @@
 
 namespace App\Entities;
 
-class Pago {
+class PedidoDetalles {
     public $id;
-    public $factura_id;
-    public $metodo_pago_id;
-    public $monto;
-    public $fecha_pago;
+    public $pedido_id;
+    public $producto_id;
+    public $cantidad;
+    public $precio_unitario;
+    public $subtotal;
     public $active;
 }
