@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-12 text-center my-4">
                 <h1 class="text-dark">Dashboard</h1>
-                <p class="text-muted">Bienvenido al sistema ERP FerreToolsApp</p>
+                <p class="text-muted">Potencia tu negocio con decisiones basadas en datos.</p>
             </div>
         </div>
 

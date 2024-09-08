@@ -14,9 +14,10 @@ class ClienteController extends BaseController
         parent::__construct($clienteRepository);
     }
 
-    public function listClientes()
+    public function showIndex()
     {
         $clientes = $this->repository->getAll();
-        return $this->render('clientes/list', ['clientes' => $clientes]);
+
+        $this->render('modules/clientes/index', ['clientes'=> $clientes]);
     }
 }

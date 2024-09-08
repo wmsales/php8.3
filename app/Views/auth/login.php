@@ -53,8 +53,8 @@
     <div class="container">
         <div class="col-md-6">
             <div class="card p-4">
-                <h3 class="text-center fw-bold mb-2">FerreToolsApp</h3>
-                <p class="text-center mb-4">Administra tu empresa con facilidad</p>
+                <h1 class="text-center fw-bold mb-2">Conekta ERP</h1>
+                <p class="text-center mb-4">Potencia tu negocio con decisiones basadas en datos</p>
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger"><?= $error ?></div>
                 <?php endif; ?>

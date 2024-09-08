@@ -2,6 +2,8 @@
 
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\ClienteController;
+
 use Symfony\Component\HttpFoundation\Request;
 
 return [
@@ -9,6 +11,12 @@ return [
         'method' => 'GET',
         'uri' => '/home',
         'target' => [HomeController::class, 'showHome'],
+        'protected' => true
+    ],
+    [
+        'method' => 'GET',
+        'uri' => '/clientes',
+        'target' => [ClienteController::class, 'showIndex'],
         'protected' => true
     ],
     [
