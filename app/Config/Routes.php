@@ -8,7 +8,8 @@ return [
     [
         'method' => 'GET',
         'uri' => '/home',
-        'target' => [HomeController::class, 'showHome']
+        'target' => [HomeController::class, 'showHome'],
+        'protected' => true
     ],
     [
         'method' => 'GET',
@@ -16,7 +17,8 @@ return [
         'target' => function() {
             $request = Request::createFromGlobals();
             (new AuthController())->showLogin();
-        }
+        },
+        'protected' => false
     ],
     [
         'method' => 'POST',
@@ -24,7 +26,8 @@ return [
         'target' => function() {
             $request = Request::createFromGlobals();
             (new AuthController())->login($request);
-        }
+        },
+        'protected' => false
     ],
     [
         'method' => 'GET',
@@ -32,7 +35,8 @@ return [
         'target' => function() {
             $request = Request::createFromGlobals();
             (new AuthController())->showRegister();
-        }
+        },
+        'protected' => false
     ],
     [
         'method' => 'POST',
@@ -40,13 +44,15 @@ return [
         'target' => function() {
             $request = Request::createFromGlobals();
             (new AuthController())->register($request);
-        }
+        },
+        'protected' => false
     ],
     [
         'method' => 'GET',
         'uri' => '/logout',
         'target' => function() {
             (new AuthController())->logout();
-        }
+        },
+        'protected' => true
     ]
 ];

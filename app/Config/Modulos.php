@@ -7,7 +7,7 @@ return [
         'nombre' => 'Inicio',
         'descripcion' => 'Página principal del ERP',
         'icono' => 'fas fa-home',
-        'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA'],
+        'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA', 'INVITADO'],
         'hijos' => [
             [
                 'nombre' => 'Home',
@@ -15,7 +15,7 @@ return [
                 'ruta' => '/home',
                 'vista' => 'home/home.php',
                 'icono' => 'fas fa-house-user',
-                'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA']
+                'roles' => ['ADMIN', 'GERENCIA', 'VENTAS', 'BODEGA', 'INVITADO']
             ]
         ]
     ],
