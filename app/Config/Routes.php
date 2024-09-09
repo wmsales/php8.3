@@ -20,6 +20,24 @@ return [
         'protected' => true
     ],
     [
+        'method' => 'POST',
+        'uri' => '/clientes/create',
+        'target' => [ClienteController::class, 'createCliente'],
+        'protected' => true
+    ],
+    [
+        'method' => 'POST',
+        'uri' => '/clientes/update',
+        'target' => [ClienteController::class, 'updateCliente'],
+        'protected' => true
+    ],
+    [
+        'method' => 'POST',
+        'uri' => '/clientes/delete',
+        'target' => [ClienteController::class, 'deleteCliente'],
+        'protected' => true
+    ],
+    [
         'method' => 'GET',
         'uri' => '/login',
         'target' => function() {

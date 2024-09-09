@@ -4,9 +4,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <div class="row admin-dashboard">
-        <div class="col-md-4 mt-3">
+        <div class="col-md-4">
             <?php include __DIR__ . '/../components/breadcrumb.php'; ?>
         </div>
         <!-- Título del Dashboard -->

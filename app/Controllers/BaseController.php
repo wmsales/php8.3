@@ -38,6 +38,7 @@ class BaseController
         return $this->repository->delete($id);
     }
 
+    // Renderizar una vista
     protected function render($view, $data = [])
     {
         extract($data);
@@ -50,6 +51,4 @@ class BaseController
             echo "Error: La vista '{$view}' no se encontró en {$viewPath}.";
         }
     }
-
-
 }
