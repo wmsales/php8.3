@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Core\HttpHelper;
 use App\Repositories\ClienteRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ClienteController extends BaseController
 {
@@ -19,8 +18,40 @@ class ClienteController extends BaseController
      */
     public function showIndex()
     {
-        $clientes = $this->repository->getAll();
-        $this->render('modules/clientes/index', ['clientes' => $clientes]);
+        $request = HttpHelper::getRequest();
+        $page = HttpHelper::getParam($request, 'page', 1); // Por defecto, página 1
+    
+        $perPage = 7; // Número de clientes por página
+        $totalClientes = $this->repository->countAll();
+        $clientes = $this->repository->getPaginated($page, $perPage);
+    
+        $totalPages = ceil($totalClientes / $perPage);
+    
+        $this->render('modules/clientes/index', [
+            'clientes' => $clientes,
+            'currentPage' => $page,
+            'totalPages' => $totalPages
+        ]);
+    }
+
+    /**
+     * Obtener datos de un cliente por ID
+     */
+    public function getCliente($id)
+    {
+        $cliente = $this->repository->findById($id);
+
+        if ($cliente) {
+            return HttpHelper::createJsonResponse([
+                'status' => 'success',
+                'cliente' => $cliente
+            ]);
+        }
+
+        return HttpHelper::createJsonResponse([
+            'status' => 'error',
+            'message' => 'Cliente no encontrado'
+        ], 404);
     }
 
     /**
@@ -34,10 +65,13 @@ class ClienteController extends BaseController
         $direccion = HttpHelper::getParam($request, 'direccion');
         $telefono = HttpHelper::getParam($request, 'telefono');
         $email = HttpHelper::getParam($request, 'email');
+        $nit = HttpHelper::getParam($request, 'nit');
+        $cui = HttpHelper::getParam($request, 'cui') ?: null;
+        $fecha_nacimiento = HttpHelper::getParam($request, 'fecha_nacimiento');
 
-        if (!$nombre || !$email) {
+        if (!$nombre || !$nit) {
             return HttpHelper::createJsonResponse(
-                ['status' => 'error', 'message' => 'Nombre y Email son obligatorios'],
+                ['status' => 'error', 'message' => 'Nombre y NIT son obligatorios'],
                 400
             );
         }
@@ -46,7 +80,10 @@ class ClienteController extends BaseController
             'nombre' => $nombre,
             'direccion' => $direccion,
             'telefono' => $telefono,
-            'email' => $email
+            'email' => $email,
+            'nit' => $nit,
+            'cui' => $cui,
+            'fecha_nacimiento' => $fecha_nacimiento
         ];
 
         $result = $this->repository->insert($data);
@@ -63,17 +100,22 @@ class ClienteController extends BaseController
      */
     public function updateCliente()
     {
-        $request = HttpHelper::getRequest();
+        $requestBody = file_get_contents('php://input');
+        $requestData = json_decode($requestBody, true);
 
-        $id = HttpHelper::getParam($request, 'id');
-        $nombre = HttpHelper::getParam($request, 'nombre');
-        $direccion = HttpHelper::getParam($request, 'direccion');
-        $telefono = HttpHelper::getParam($request, 'telefono');
-        $email = HttpHelper::getParam($request, 'email');
+        $id = $requestData['id'] ?? null;
+        $nombre = $requestData['nombre'] ?? null;
+        $direccion = $requestData['direccion'] ?? null;
+        $telefono = $requestData['telefono'] ?? null;
+        $email = $requestData['email'] ?? null;
+        $nit = $requestData['nit'] ?? null;
+        $cui = $requestData['cui'] ?? null;
+        $fecha_nacimiento = $requestData['fecha_nacimiento'] ?? null;
+        $active = $requestData['active'] ?? 0;
 
-        if (!$id || !$nombre || !$email) {
+        if (!$id || !$nombre || !$nit) {
             return HttpHelper::createJsonResponse(
-                ['status' => 'error', 'message' => 'ID, Nombre y Email son obligatorios'],
+                ['status' => 'error', 'message' => 'ID, Nombre y NIT son obligatorios'],
                 400
             );
         }
@@ -82,7 +124,11 @@ class ClienteController extends BaseController
             'nombre' => $nombre,
             'direccion' => $direccion,
             'telefono' => $telefono,
-            'email' => $email
+            'email' => $email,
+            'nit' => $nit,
+            'cui' => $cui,
+            'fecha_nacimiento' => $fecha_nacimiento,
+            'active' => $active
         ];
 
         $result = $this->repository->update($id, $data);
@@ -93,6 +139,7 @@ class ClienteController extends BaseController
 
         return HttpHelper::createJsonResponse(['status' => 'error', 'message' => 'Error al actualizar cliente'], 500);
     }
+
 
     /**
      * Elimina un cliente
@@ -109,7 +156,7 @@ class ClienteController extends BaseController
             );
         }
 
-        $result = $this->repository->delete($id);
+        $result = $this->repository->deleteActive($id);
 
         if ($result) {
             return HttpHelper::createJsonResponse(['status' => 'success', 'message' => 'Cliente eliminado']);

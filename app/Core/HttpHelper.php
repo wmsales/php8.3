@@ -38,11 +38,19 @@ class HttpHelper
      * @param array $data
      * @param int $statusCode
      * @param array $headers
-     * @return JsonResponse
+     * @return void
      */
-    public static function createJsonResponse(array $data, int $statusCode = 200, array $headers = []): JsonResponse
+    public static function createJsonResponse(array $data, int $statusCode = 200, array $headers = [])
     {
-        return new JsonResponse($data, $statusCode, $headers);
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+
+        foreach ($headers as $key => $value) {
+            header("{$key}: {$value}");
+        }
+
+        echo json_encode($data);
+        exit;
     }
 
     /**
@@ -59,6 +67,7 @@ class HttpHelper
 
     /**
      * Extrae un parámetro de la solicitud (GET, POST, etc.) con saneamiento.
+     * Si es una solicitud JSON, extrae los datos del cuerpo JSON.
      *
      * @param Request $request
      * @param string $key
@@ -68,6 +77,13 @@ class HttpHelper
      */
     public static function getParam(Request $request, string $key, $default = null, string $filter = FILTER_SANITIZE_STRING)
     {
+        // Manejar si el contenido es JSON
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = json_decode($request->getContent(), true); // Decodificar el JSON
+            return filter_var($data[$key] ?? $default, $filter);
+        }
+
+        // Si no es JSON, obtener de GET o POST
         return filter_var($request->get($key, $default), $filter);
     }
 
@@ -81,5 +97,4 @@ class HttpHelper
     {
         return $request->getClientIp();
     }
-
 }

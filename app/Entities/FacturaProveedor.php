@@ -2,15 +2,15 @@
 
 namespace App\Entities;
 
-class Factura {
+class FacturaProveedor {
     public $id;
-    public $cliente_id;
-    public $fecha_factura;
-    public $total;
-    public $pedido_id;
+    public $proveedor_id;
     public $uuid;
     public $numero_serie;
     public $numero_factura;
+    public $fecha_factura;
+    public $total;
+    public $estado_pago_id;
     public $fecha_modificacion;
     public $active;
 }

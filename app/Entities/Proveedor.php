@@ -2,15 +2,14 @@
 
 namespace App\Entities;
 
-class Cliente {
+class Proveedor {
     public $id;
     public $nombre;
     public $direccion;
     public $telefono;
     public $email;
     public $nit;
-    public $cui;
-    public $fecha_nacimiento;
+    public $contacto;
     public $fecha_creacion;
     public $fecha_modificacion;
     public $active;

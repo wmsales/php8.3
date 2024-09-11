@@ -20,20 +20,26 @@ return [
         'protected' => true
     ],
     [
+        'method' => 'GET',
+        'uri' => '/cliente/get/[i:id]',
+        'target' => [ClienteController::class, 'getCliente'],
+        'protected' => true
+    ],    
+    [
         'method' => 'POST',
-        'uri' => '/clientes/create',
+        'uri' => '/cliente/create',
         'target' => [ClienteController::class, 'createCliente'],
         'protected' => true
     ],
     [
         'method' => 'POST',
-        'uri' => '/clientes/update',
+        'uri' => '/cliente/update',
         'target' => [ClienteController::class, 'updateCliente'],
         'protected' => true
     ],
     [
         'method' => 'POST',
-        'uri' => '/clientes/delete',
+        'uri' => '/cliente/delete',
         'target' => [ClienteController::class, 'deleteCliente'],
         'protected' => true
     ],

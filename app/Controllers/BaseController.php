@@ -38,6 +38,12 @@ class BaseController
         return $this->repository->delete($id);
     }
 
+    // Eliminar un registro activo
+    public function deleteActive($id)
+    {
+        return $this->repository->deleteActive($id);
+    }
+
     // Renderizar una vista
     protected function render($view, $data = [])
     {

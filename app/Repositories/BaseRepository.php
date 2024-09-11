@@ -44,4 +44,22 @@ class BaseRepository
     {
         return $this->db->delete($this->table, ["id" => $id]);
     }
+
+    public function deleteActive($id)
+    {
+        return $this->db->update($this->table, ["active" => false], ["id" => $id]);
+    }
+
+    public function getPaginated($page, $perPage)
+    {
+        $offset = ($page - 1) * $perPage;
+        return $this->db->select($this->table, "*", [
+            "LIMIT" => [$offset, $perPage]
+        ]);
+    }
+
+    public function countAll()
+    {
+        return $this->db->count($this->table);
+    }
 }
