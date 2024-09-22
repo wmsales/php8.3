@@ -3,15 +3,15 @@
 namespace App\Controllers;
 
 /**
- * 
- * Este controlador se utiliza cuando quieres mostrar una vista estatica, aqui no hay
- * conexion alguna con la base de datos, no tenemos acceso, solo a mostrar vistas php
- * usando la function render, podes expandirlo pero siempre tomando en cuenta la razon
- * de porque esta clase fue creada
- * 
+ *
+ * Este controlador se utiliza cuando quieres mostrar una vista en la aplicación.
+ * Se encarga de renderizar la vista y pasarle los datos necesarios. Fue creada para
+ * vistas que solo muestran información y no requieren de lógica del repositorio. Pero
+ * puedes usar logica de PHP para precargar datos en la vista.
+ *
  * Author: David Vargas
- * Last Modified: 7/09/2024 11:56 AM
- * 
+ * Last Modified: 22/09/2024 13:30
+ *
  */
 
 class ViewController
