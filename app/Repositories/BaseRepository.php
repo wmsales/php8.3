@@ -22,7 +22,7 @@ class BaseRepository
 
     public function findBy($field, $value)
     {
-        return $this->db->get($this->table, '*', [$field => $value]);
+        return $this->db->get($this->table, "*", [$field => $value]);
     }
 
     public function findById($id)
@@ -47,19 +47,44 @@ class BaseRepository
 
     public function deleteActive($id)
     {
-        return $this->db->update($this->table, ["active" => false], ["id" => $id]);
+        return $this->db->update(
+            $this->table,
+            ["active" => false],
+            ["id" => $id]
+        );
     }
 
     public function getPaginated($page, $perPage)
     {
+        $perPage = min($perPage, 100);
         $offset = ($page - 1) * $perPage;
         return $this->db->select($this->table, "*", [
-            "LIMIT" => [$offset, $perPage]
+            "LIMIT" => [$offset, $perPage],
         ]);
     }
 
     public function countAll()
     {
         return $this->db->count($this->table);
+    }
+
+    // Iniciar una transacción
+    public function beginTransaction()
+    {
+        $this->db->pdo->beginTransaction();
+    }
+
+    // Confirmar la transacción
+    public function commit()
+    {
+        $this->db->pdo->commit();
+    }
+
+    // Revertir la transacción
+    public function rollBack()
+    {
+        if ($this->db->pdo->inTransaction()) {
+            $this->db->pdo->rollBack();
+        }
     }
 }
