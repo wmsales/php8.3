@@ -18,17 +18,14 @@ $match = $router->match();
 
 if ($match) {
     try {
-        // Comprueba si el target es un closure o un controlador
         if (is_callable($match['target'])) {
             call_user_func_array($match['target'], $match['params']);
         } else {
-            // Verificamos que 'uri' esté definido en la ruta
             if (isset($match['target']) && is_array($match['target'])) {
                 list($controller, $method) = $match['target'];
                 $controller = new $controller();
                 call_user_func_array([$controller, $method], $match['params']);
             } else {
-                // Si no hay URI, manejar un error o redirigir
                 (new \App\Controllers\ErrorController())->notFound();
             }
         }

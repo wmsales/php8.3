@@ -1,20 +1,19 @@
-<?php include __DIR__ . '/../../layouts/header.php';
+<?php include __DIR__ . "/../../layouts/header.php";
 
 function truncate($text, $length)
 {
-    return strlen($text) > $length ? substr($text, 0, $length) . '...' : $text;
+    return strlen($text) > $length ? substr($text, 0, $length) . "..." : $text;
 }
-
 ?>
 
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-6 mb-4">
-            <?php include __DIR__ . '/../../components/breadcrumb.php'; ?>
+        <div class="col-md-6 mb-2">
+            <?php include __DIR__ . "/../../components/breadcrumb.php"; ?>
         </div>
-        <div class="col-md-2 mb-4">
+        <div class="col-md-2 mb-2">
         </div>
-        <div class="col-md-4 mb-4 text-end">
+        <div class="col-md-4 mb-2 text-end">
             <!-- Botón para agregar nuevo cliente -->
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClienteModal">
                 <i class="fas fa-plus"></i> Agregar Cliente
@@ -22,8 +21,8 @@ function truncate($text, $length)
         </div>
     </div>
 
-    <div class="row p-4 m-1 bg-white rounded">
-        <div class="col-md-12">
+    <div class="row m-1 bg-white rounded">
+        <div class="col-md-12 p-4">
             <table class="table table-striped table-hover table-bordered" id="clientesTable">
                 <thead>
                     <tr class="table-dark">
@@ -37,21 +36,39 @@ function truncate($text, $length)
                 </thead>
                 <tbody id="clientesBody">
                     <?php foreach ($clientes as $cliente): ?>
-                        <tr data-id="<?php echo $cliente['id']; ?>">
-                            <td><?php echo truncate($cliente['nombre'], 20); ?></td>
-                            <td><?php echo truncate($cliente['direccion'], 40); ?>
-                            <td><?php echo $cliente['telefono']; ?></td>
-                            <td><?php echo $cliente['nit']; ?></td>
-                            <td class="text-center"><?php echo $cliente['active'] ? '✅' : '❌'; ?></td>
+                        <tr data-id="<?php echo $cliente["id"]; ?>">
+                            <td><?php echo truncate(
+                                $cliente["nombre"],
+                                20
+                            ); ?></td>
+                            <td><?php echo truncate(
+                                $cliente["direccion"],
+                                40
+                            ); ?>
+                            <td><?php echo $cliente["telefono"]; ?></td>
+                            <td><?php echo $cliente["nit"]; ?></td>
+                            <td class="text-center"><?php echo $cliente[
+                                "active"
+                            ]
+                                ? "✅"
+                                : "❌"; ?></td>
                             <td class="text-center">
                                 <!-- Botón para editar -->
-                                <button class="btn btn-warning btn-sm edit-btn" data-id="<?php echo $cliente['id']; ?>"
+                                <button class="btn btn-warning btn-sm edit-btn" data-id="<?php echo $cliente[
+                                    "id"
+                                ]; ?>"
                                     data-bs-toggle="modal" data-bs-target="#editClienteModal">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <!-- Botón para eliminar -->
-                                <button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $cliente['id']; ?>"
-                                    data-bs-toggle="modal" data-bs-target="#deleteClienteModal" <?php echo $cliente['active'] ? '' : 'disabled'; ?>>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $cliente[
+                                    "id"
+                                ]; ?>"
+                                    data-bs-toggle="modal" data-bs-target="#deleteClienteModal" <?php echo $cliente[
+                                        "active"
+                                    ]
+                                        ? ""
+                                        : "disabled"; ?>>
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 </button>
@@ -65,7 +82,9 @@ function truncate($text, $length)
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center" id="pagination">
                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                        <li class="page-item <?php echo $i == $currentPage
+                            ? "active"
+                            : ""; ?>">
                             <a class="page-link" href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
                         </li>
                     <?php endfor; ?>
@@ -187,25 +206,25 @@ function truncate($text, $length)
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
         addPaginationListeners();
         addModalListeners();
         resetFormOnModalClose();
     });
 
-    function resetFormOnModalClose() {
+    const resetFormOnModalClose = () => {
         const addClienteModal = document.getElementById('addClienteModal');
-        addClienteModal.addEventListener('show.bs.modal', function () {
+        addClienteModal.addEventListener('show.bs.modal', () => {
             resetForm('addClienteForm');
         });
 
         const editClienteModal = document.getElementById('editClienteModal');
-        editClienteModal.addEventListener('hide.bs.modal', function () {
+        editClienteModal.addEventListener('hide.bs.modal', () => {
             resetForm('editClienteForm');
         });
     }
 
-    function resetForm(formId) {
+    const resetForm = (formId) => {
         const form = document.getElementById(formId);
         form.reset(); // Esto limpia todos los inputs del formulario
         if (formId === 'editClienteForm') {
@@ -213,11 +232,11 @@ function truncate($text, $length)
         }
     }
 
-    function addPaginationListeners() {
-        document.querySelectorAll('.page-link').forEach(function (link) {
-            link.addEventListener('click', function (e) {
+    const addPaginationListeners = () => {
+        document.querySelectorAll('.page-link').forEach((link) => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const page = this.getAttribute('data-page');
+                const page = link.getAttribute('data-page');
 
                 fetch(`/clientes?page=${page}`)
                     .then(response => response.text())
@@ -239,7 +258,7 @@ function truncate($text, $length)
     }
 
     // Crear cliente
-    document.getElementById('addClienteForm').addEventListener('submit', function (e) {
+    document.getElementById('addClienteForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const nombre = document.getElementById('nombre').value;
         const direccion = document.getElementById('direccion').value;
@@ -280,10 +299,10 @@ function truncate($text, $length)
     });
 
     // Función para volver a inicializar los modales
-    function addModalListeners() {
+    const addModalListeners = () => {
         document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');  // Obtener el ID del cliente
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');  // Obtener el ID del cliente
 
                 fetch(`/cliente/get/${id}`)
                     .then(response => response.json())
@@ -311,7 +330,7 @@ function truncate($text, $length)
         });
 
         // Editar cliente (enviar cambios al servidor)
-        document.getElementById('editClienteForm').addEventListener('submit', function (e) {
+        document.getElementById('editClienteForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('edit-id').value;
             const nombre = document.getElementById('edit-nombre').value;
@@ -356,8 +375,8 @@ function truncate($text, $length)
 
         // Eliminar cliente
         document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');  // Obtener el ID del cliente a eliminar
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');  // Obtener el ID del cliente a eliminar
 
                 Swal.fire({
                     title: '¿Estás seguro?',
@@ -404,4 +423,4 @@ function truncate($text, $length)
     }
 </script>
 
-<?php include __DIR__ . '/../../layouts/footer.php'; ?>
+<?php include __DIR__ . "/../../layouts/footer.php"; ?>
